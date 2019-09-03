@@ -12,7 +12,6 @@ import App from "./components/app"
 
 const bookstoreService = new BookstoreService();
 
-console.log(bookstoreService.getBooks());
 ReactDOM.render(
     <Provider store = {store}>
         <ErrorBoundry>
