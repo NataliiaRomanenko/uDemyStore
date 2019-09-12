@@ -13,16 +13,17 @@ import ErrorIndicator from "../error-indicator";
 class BookList extends Component{
 
     componentDidMount() {
-        const {
-            bookstoreService,
-            booksLoaded,
-            bookRequested,
-            bookError} = this.props;
-
-        bookRequested();
-        bookstoreService.getBooks()
-            .then((data) => booksLoaded(data))
-            .catch((err) => bookError(err));
+        this.props.fetchBooks();
+        // const {
+        //     bookstoreService,
+        //     booksLoaded,
+        //     bookRequested,
+        //     bookError} = this.props;
+        //
+        // bookRequested();
+        // bookstoreService.getBooks()
+        //     .then((data) => booksLoaded(data))
+        //     .catch((err) => bookError(err));
     }
 
     render() {
@@ -46,18 +47,24 @@ class BookList extends Component{
      </ul>
     )};
 }
-const mapStateToProps = (state) => {
 
+const mapStateToProps = (state) => {
     return{
         books: state.books,
         loading: state.loading
     }
 };
 
-const mapDispatchToProps = {
-    booksLoaded,
-    bookRequested,
-    bookError
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const {bookstoreService} = ownProps;
+    return{
+        fetchBooks: () => {
+            dispatch(bookRequested());
+             bookstoreService.getBooks()
+              .then((data) => dispatch(booksLoaded(data)))
+              .catch((err) => dispatch(bookError(err)));
+        }
+    }
 };
 
 export default compose(
