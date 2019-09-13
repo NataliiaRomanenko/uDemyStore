@@ -8,24 +8,25 @@ import {compose} from '../../utils';
 import Spinner from "../spinner";
 import ErrorIndicator from "../error-indicator";
 
+const BoorList = ({books}) => {
+    return(
+        <ul className="book-list">
+            {
+                books.map((book) => {
+                    return(
+                        <li key={book.id}><BookListItem book={book}/></li>
+                    )
+                })
+            }
+        </ul>
+    )
+};
 
 
-class BookList extends Component{
-
+class BookListContainer extends Component{
     componentDidMount() {
         this.props.fetchBooks();
-        // const {
-        //     bookstoreService,
-        //     booksLoaded,
-        //     bookRequested,
-        //     bookError} = this.props;
-        //
-        // bookRequested();
-        // bookstoreService.getBooks()
-        //     .then((data) => booksLoaded(data))
-        //     .catch((err) => bookError(err));
     }
-
     render() {
         const {books, loading, error} = this.props;
         if (loading) {
@@ -35,18 +36,10 @@ class BookList extends Component{
            return <ErrorIndicator/>
         }
 
-    return(
-     <ul className="book-list">
-         {
-             books.map((book) => {
-                 return(
-                        <li key={book.id}><BookListItem book={book}/></li>
-                 )
-             })
-         }
-     </ul>
-    )};
+        return <BoorList books={books}/>
+    };
 }
+
 
 const mapStateToProps = (state) => {
     return{
@@ -65,4 +58,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default compose(
     withBookstoreService(),
     connect(mapStateToProps, mapDispatchToProps)
-)(BookList);
+)(BookListContainer);
