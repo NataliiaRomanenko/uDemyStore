@@ -28,7 +28,9 @@ const bookAddedToCart = (bookId) => {
         type: 'BOOK_ADDED_TO_CART',
         payload: bookId
     }
-}
+};
+
+
 export {
     fetchBooks,
     bookAddedToCart
