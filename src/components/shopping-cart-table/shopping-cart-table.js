@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {bookAddedToCart, bookDeleteFromCart, allBookSDeleteFromCart} from '../../actions';
 
 const ShoppingCartTable = ({items, total, onIncrease, onDecrease, onDelete}) => {
+    //console.log(total);
     const renderRow = (item, idx) => {
         const {id, title, count, total} = item;
         return(
@@ -50,10 +51,11 @@ const ShoppingCartTable = ({items, total, onIncrease, onDecrease, onDelete}) => 
                  </tbody>
 
             </table>
-
-            <div className="total">
-                Total: ${total}
-            </div>
+            { total > 0 ?
+                <div className="total">
+                    Total: ${total}
+                </div>
+            : ""}
         </div>
     )
 };
