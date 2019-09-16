@@ -52,10 +52,11 @@ const updateOrder = (state, bookId, quantity) => {
     const book = books.find(({id}) => id === bookId);
     const itemIndex = cartItems.findIndex(({id}) => id === bookId);
     const item = cartItems[itemIndex];
-
     const newItem = updateCartItem(book, item, quantity);
+    const result = updateCartItems(cartItems, newItem, itemIndex).reduce((sum, obj) => sum + obj['total'],0);
     return {
         ...state,
+        orderTotal: result,
         cartItems: updateCartItems(cartItems, newItem, itemIndex)
     };
 };
@@ -64,7 +65,7 @@ const updateOrder = (state, bookId, quantity) => {
 
 
 const reducer = (state = initialState, action) => {
-    console.log('array:', state.cartItems);
+    console.log('state: ', state,"action: ",action.type);
     switch (action.type) {
         case 'FETCH_BOOK_REQUEST':
             return {
@@ -72,7 +73,7 @@ const reducer = (state = initialState, action) => {
                 books: [],
                 loading: true,
                 error: null
-            }
+            };
         case 'FETCH_BOOKS_SUCCESS':
             return {
                 ...state,
