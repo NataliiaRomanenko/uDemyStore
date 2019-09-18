@@ -8,7 +8,7 @@ const ShoppingCartTable = ({items, total, onIncrease, onDecrease, onDelete}) => 
     const renderRow = (item, idx) => {
         const {id, title, count, total} = item;
         return(
-            <tr>
+            <tr key={id}>
                 <td>{idx + 1}</td>
                 <td>{title}</td>
                 <td>{count}</td>
